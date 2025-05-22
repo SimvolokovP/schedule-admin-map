@@ -1,0 +1,326 @@
+/* ScheduleTable.css */
+.schedule-wrapper {
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  max-width: 100%;
+  overflow-x: auto;
+  margin: 20px;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+  background: white;
+}
+
+.schedule-header {
+  padding: 20px;
+  background: #2c3e50;
+  color: white;
+  text-align: center;
+}
+
+.schedule-header h2 {
+  margin: 0;
+  font-size: 24px;
+}
+
+.schedule-header h3 {
+  margin: 5px 0 0;
+  font-size: 16px;
+  font-weight: normal;
+}
+
+.schedule-container {
+  padding: 15px;
+}
+
+.schedule-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 14px;
+  table-layout: fixed;
+}
+
+.schedule-table th {
+  background: #34495e;
+  color: white;
+  padding: 12px 8px;
+  text-align: center;
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+
+.schedule-table td {
+  border: 1px solid #e0e0e0;
+  padding: 0;
+  vertical-align: top;
+  min-width: 150px;
+  height: 120px;
+}
+
+.day-cell {
+  background: #f5f7fa;
+  font-weight: bold;
+  writing-mode: vertical-lr;
+  transform: rotate(180deg);
+  text-align: center;
+  width: 30px;
+}
+
+.time-cell {
+  background: #f5f7fa;
+  font-weight: bold;
+  white-space: nowrap;
+  width: 90px;
+  padding: 8px;
+}
+
+.empty-cell {
+  background-color: #f9f9f9;
+}
+
+.group-cell {
+  padding: 0;
+}
+
+.cell-grid {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.cell-part {
+  flex: 1;
+  display: flex;
+  position: relative;
+}
+
+.numerator {
+  background-color: rgba(46, 204, 113, 0.05);
+}
+
+.denominator {
+  background-color: rgba(52, 152, 219, 0.05);
+}
+
+.subgroup-part {
+  flex: 1;
+  padding: 3px;
+  overflow: hidden;
+  position: relative;
+}
+
+.subgroup-1 {
+  border-right: 1px solid #eee;
+}
+
+.subgroup-2 {
+  border-left: 1px solid #eee;
+}
+
+.subgroup-both {
+  /* Убираем display: none */
+  flex: 1;
+  padding: 3px;
+  overflow: hidden;
+  position: relative;
+}
+
+.week-divider {
+  height: 1px;
+  background-color: #ddd;
+  margin: 0;
+}
+
+.subgroup-divider {
+  width: 1px;
+  background-color: #ddd;
+}
+
+.lesson {
+  margin: 2px 0;
+  padding: 4px;
+  border-radius: 3px;
+  font-size: 12px;
+  line-height: 1.2;
+  height: 100%;
+}
+
+.lesson-type {
+  font-weight: bold;
+  margin-right: 3px;
+  font-size: 11px;
+}
+
+.lesson-content {
+  display: inline-block;
+}
+
+.lesson-name {
+  font-weight: 500;
+  margin-bottom: 2px;
+  font-size: 11px;
+}
+
+.lesson-details {
+  font-size: 10px;
+  color: #555;
+}
+
+.teacher,
+.room {
+  display: block;
+}
+
+.lecture {
+  background-color: rgba(155, 89, 182, 0.1);
+  border-left: 2px solid #9b59b6;
+}
+
+.practice {
+  background-color: rgba(46, 204, 113, 0.1);
+  border-left: 2px solid #2ecc71;
+}
+
+.lab {
+  background-color: rgba(52, 152, 219, 0.1);
+  border-left: 2px solid #3498db;
+}
+
+.elective {
+  background-color: rgba(241, 196, 15, 0.1);
+  border-left: 2px solid #f1c40f;
+}
+
+.schedule-legend {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  padding: 15px;
+  background: #f8f9fa;
+  border-top: 1px solid #eee;
+  gap: 15px;
+}
+
+.legend-item {
+  display: flex;
+  flex-direction: column;
+  margin: 0;
+  font-size: 13px;
+}
+
+.legend-color {
+  width: 16px;
+  height: 16px;
+  border-radius: 3px;
+  margin-right: 6px;
+  display: inline-block;
+}
+
+.lecture .legend-color {
+  background: rgba(155, 89, 182, 0.3);
+  border-left: 2px solid #9b59b6;
+}
+
+.practice .legend-color {
+  background: rgba(46, 204, 113, 0.3);
+  border-left: 2px solid #2ecc71;
+}
+
+.lab .legend-color {
+  background: rgba(52, 152, 219, 0.3);
+  border-left: 2px solid #3498db;
+}
+
+.legend-week,
+.legend-subgroup {
+  display: flex;
+  align-items: center;
+  margin: 2px 0;
+}
+
+.numerator-mark {
+  color: #2ecc71;
+  font-weight: bold;
+  margin-right: 6px;
+  width: 16px;
+  text-align: center;
+}
+
+.denominator-mark {
+  color: #3498db;
+  font-weight: bold;
+  margin-right: 6px;
+  width: 16px;
+  text-align: center;
+}
+
+.subgroup-1-mark {
+  color: #e74c3c;
+  font-weight: bold;
+  margin-right: 6px;
+  width: 16px;
+  text-align: center;
+}
+
+.subgroup-2-mark {
+  color: #f39c12;
+  font-weight: bold;
+  margin-right: 6px;
+  width: 16px;
+  text-align: center;
+}
+
+/* Стиль для универсального урока */
+.universal-lesson {
+  display: flex;
+  height: 100%;
+  padding: 5px;
+}
+
+.universal-lesson .lesson {
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.universal-lesson .lesson-type {
+  font-size: 14px;
+}
+
+.universal-lesson .lesson-name {
+  font-size: 14px;
+  font-weight: bold;
+}
+
+.universal-lesson .lesson-details {
+  font-size: 12px;
+}
+
+/* Адаптивность */
+@media (max-width: 1200px) {
+  .schedule-table {
+    font-size: 13px;
+  }
+
+  .day-cell {
+    width: 25px;
+  }
+
+  .time-cell {
+    width: 80px;
+  }
+
+  .lesson {
+    font-size: 11px;
+  }
+
+  .lesson-name {
+    font-size: 10px;
+  }
+
+  .lesson-details {
+    font-size: 9px;
+  }
+}
