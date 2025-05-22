@@ -93,6 +93,27 @@ DAYS_OF_WEEK.forEach((day) => {
       },
     ];
 
+    daySchedule.timeSlots[3].lessons["У-223"] = [
+      {
+        id: "9",
+        name: "Современные фреймворки",
+        type: "practice",
+        teacher: "Грек А.В.",
+        room: "125",
+        subgroup: 1,
+        week: "numerator",
+      },
+      {
+        id: "9",
+        name: "Современные фреймворки",
+        type: "practice",
+        teacher: "Грек А.В.",
+        room: "125",
+        subgroup: 2,
+        week: "denominator",
+      },
+    ];
+
     daySchedule.timeSlots[0].lessons["У-222"] = [
       {
         id: "2",

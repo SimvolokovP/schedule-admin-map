@@ -1,29 +1,19 @@
-import { Fragment } from "react/jsx-runtime";
+import { Fragment } from "react";
 import type { Lesson, LessonType, ScheduleData } from "./types";
+import { DAYS_OF_WEEK, TIME_SLOTS } from "./tableHelpers";
+import ScheduleLegend from "./ScheduleLegend";
 
 interface ScheduleTableProps {
   data: ScheduleData;
+  onSelect: (cell: { day: string; time: string; group: string }) => void;
+  selectedCell: { day: string; time: string; group: string } | null;
 }
 
-const DAYS_OF_WEEK = [
-  "ПОНЕДЕЛЬНИК",
-  "ВТОРНИК",
-  "СРЕДА",
-  "ЧЕТВЕРГ",
-  "ПЯТНИЦА",
-  "СУББОТА",
-];
-
-const TIME_SLOTS = [
-  "08.00-09.35",
-  "09.45-11.20",
-  "11.50-13.25",
-  "13.35-15.10",
-  "15.20-16.55",
-  "17.05-18.40",
-];
-
-const ScheduleTable: React.FC<ScheduleTableProps> = ({ data }) => {
+const ScheduleTable: React.FC<ScheduleTableProps> = ({
+  data,
+  onSelect,
+  selectedCell,
+}) => {
   const getLessonAbbreviation = (type: LessonType): string => {
     const abbreviations = {
       lecture: "л.",
@@ -51,18 +41,32 @@ const ScheduleTable: React.FC<ScheduleTableProps> = ({ data }) => {
     );
   };
 
-  const renderCell = (lessons: Lesson[] | undefined, group: string) => {
+  const renderCell = (
+    lessons: Lesson[] | undefined,
+    group: string,
+    day: string,
+    time: string
+  ) => {
+    const isSelectedCell =
+      selectedCell?.day === day &&
+      selectedCell.group === group &&
+      selectedCell.time === time;
     if (!lessons || lessons.length === 0)
-      return <td key={group} className="empty-cell"></td>;
+      return (
+        <td
+          key={`${day}-${time}-${group}`}
+          className={`empty-cell ${isSelectedCell ? "selected-cell" : ""}`}
+          onClick={() => onSelect({ day, time, group })}
+        ></td>
+      );
 
-    // Проверяем, есть ли общий урок для всех подгрупп и недель
     const universalLesson = lessons.find(
       (lesson) => lesson.week === "both" && lesson.subgroup === "both"
     );
 
     if (universalLesson) {
       return (
-        <td key={group} className="group-cell">
+        <td key={`${day}-${time}-${group}`} className="group-cell">
           <div className="cell-grid universal-lesson">
             {renderLesson(universalLesson)}
           </div>
@@ -70,7 +74,6 @@ const ScheduleTable: React.FC<ScheduleTableProps> = ({ data }) => {
       );
     }
 
-    // Обычное отображение для остальных случаев
     const lessonsMap: Record<string, Lesson[]> = {
       "numerator-1": [],
       "numerator-2": [],
@@ -94,9 +97,8 @@ const ScheduleTable: React.FC<ScheduleTableProps> = ({ data }) => {
     });
 
     return (
-      <td key={group} className="group-cell">
+      <td key={`${day}-${time}-${group}`} className="group-cell">
         <div className="cell-grid">
-          {/* Верхний ряд (числитель) */}
           <div className="cell-part numerator">
             <div className="subgroup-part subgroup-1">
               {lessonsMap["numerator-1"].map(renderLesson)}
@@ -111,7 +113,6 @@ const ScheduleTable: React.FC<ScheduleTableProps> = ({ data }) => {
 
           <div className="week-divider horizontal"></div>
 
-          {/* Нижний ряд (знаменатель) */}
           <div className="cell-part denominator">
             <div className="subgroup-part subgroup-1">
               {lessonsMap["denominator-1"].map(renderLesson)}
@@ -176,7 +177,12 @@ const ScheduleTable: React.FC<ScheduleTableProps> = ({ data }) => {
                     )}
                     <td className="time-cell">{time}</td>
                     {data.groups.map((group) =>
-                      renderCell(getLessonsForTimeSlot(day, time, group), group)
+                      renderCell(
+                        getLessonsForTimeSlot(day, time, group),
+                        group,
+                        day,
+                        time
+                      )
                     )}
                   </tr>
                 ))}
@@ -186,40 +192,7 @@ const ScheduleTable: React.FC<ScheduleTableProps> = ({ data }) => {
         </table>
       </div>
 
-      <div className="schedule-legend">
-        <div className="legend-item">
-          <span className="legend-color lecture"></span>
-          <span>Лекция</span>
-        </div>
-        <div className="legend-item">
-          <span className="legend-color practice"></span>
-          <span>Практика</span>
-        </div>
-        <div className="legend-item">
-          <span className="legend-color lab"></span>
-          <span>Лабораторная</span>
-        </div>
-        <div className="legend-item">
-          <div className="legend-week">
-            <span className="numerator-mark">Ч</span>
-            <span>Числитель</span>
-          </div>
-          <div className="legend-week">
-            <span className="denominator-mark">З</span>
-            <span>Знаменатель</span>
-          </div>
-        </div>
-        <div className="legend-item">
-          <div className="legend-subgroup">
-            <span className="subgroup-1-mark">1</span>
-            <span>Подгруппа 1</span>
-          </div>
-          <div className="legend-subgroup">
-            <span className="subgroup-2-mark">2</span>
-            <span>Подгруппа 2</span>
-          </div>
-        </div>
-      </div>
+      <ScheduleLegend />
     </div>
   );
 };

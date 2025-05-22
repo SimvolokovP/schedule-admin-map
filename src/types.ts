@@ -1,5 +1,5 @@
 // types.ts
-export type LessonType = 'lecture' | 'practice' | 'lab' | 'elective';
+export type LessonType = 'lecture' | 'practice' | 'lab';
 export type WeekType = 'numerator' | 'denominator' | 'both';
 export type SubgroupType = 1 | 2 | 'both';
 
