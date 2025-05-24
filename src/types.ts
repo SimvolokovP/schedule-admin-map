@@ -1,7 +1,6 @@
-// types.ts
-export type LessonType = 'lecture' | 'practice' | 'lab';
-export type WeekType = 'numerator' | 'denominator' | 'both';
-export type SubgroupType = 1 | 2 | 'both';
+export type LessonType = "lecture" | "practice" | "lab";
+export type WeekType = "numerator" | "denominator" | "both";
+export type SubgroupType = 1 | 2 | "both";
 
 export interface Lesson {
   id: string;
@@ -11,21 +10,14 @@ export interface Lesson {
   room: string;
   subgroup: SubgroupType;
   week: WeekType;
+  day: string; 
+  time: string; 
+  group: string; 
   merged?: boolean;
 }
 
-export interface TimeSlot {
-  time: string;
-  lessons: Record<string, Lesson[]>;
-}
-
-export interface DaySchedule {
-  day: string;
-  timeSlots: TimeSlot[];
-}
-
 export interface ScheduleData {
-  days: DaySchedule[];
+  lessons: Lesson[]; 
   groups: string[];
   semester: string;
   faculty: string;

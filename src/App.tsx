@@ -1,10 +1,28 @@
-import React, { useState } from "react";
-import ScheduleTable from "./ScheduleTable";
+import React, { useState, type FC } from "react";
+import ScheduleTable from "./components/ScheduleTable";
 import { scheduleData } from "./mock";
 import type { Lesson, ScheduleData } from "./types";
-import Modal from "./Modal";
+import Modal from "./components/Modal";
+import AddLessonForm from "./components/AddLessonForm";
 
-const App: React.FC = () => {
+const DAYS_OF_WEEK = [
+  "ПОНЕДЕЛЬНИК",
+  "ВТОРНИК",
+  "СРЕДА",
+  "ЧЕТВЕРГ",
+  "ПЯТНИЦА",
+  "СУББОТА",
+];
+const TIME_SLOTS = [
+  "08.00-09.35",
+  "09.45-11.20",
+  "11.50-13.25",
+  "13.35-15.10",
+  "15.20-16.55",
+  "17.05-18.40",
+];
+
+const App: FC = () => {
   const [schedule, setSchedule] = useState<ScheduleData>(scheduleData);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [newLesson, setNewLesson] = useState<Omit<Lesson, "id">>({
@@ -14,6 +32,9 @@ const App: React.FC = () => {
     room: "",
     subgroup: "both",
     week: "both",
+    day: "",
+    time: "",
+    group: "",
   });
   const [selectedCell, setSelectedCell] = useState<{
     day: string;
@@ -21,21 +42,20 @@ const App: React.FC = () => {
     group: string;
   } | null>(null);
 
-  const openModal = () => {
+  const openModal = (cell: { day: string; time: string; group: string }) => {
+    setSelectedCell(cell);
+    setNewLesson((prev) => ({
+      ...prev,
+      day: cell.day,
+      time: cell.time,
+      group: cell.group,
+    }));
     setIsModalOpen(true);
   };
 
   const closeModal = () => {
     setIsModalOpen(false);
     setSelectedCell(null);
-    setNewLesson({
-      name: "",
-      type: "lecture",
-      teacher: "",
-      room: "",
-      subgroup: "both",
-      week: "both",
-    });
   };
 
   const handleInputChange = (
@@ -43,98 +63,53 @@ const App: React.FC = () => {
   ) => {
     const { name, value } = e.target;
 
-    setNewLesson((prev) => {
-      if (name === "subgroup") {
-        return {
-          ...prev,
-          subgroup: value === "both" ? "both" : (Number(value) as 1 | 2),
-        };
-      } else if (name === "week") {
-        return {
-          ...prev,
-          week: value as "both" | "numerator" | "denominator",
-        };
-      } else {
-        return {
-          ...prev,
-          [name]: value,
-        };
-      }
-    });
+    setNewLesson((prev) => ({
+      ...prev,
+      [name]:
+        name === "subgroup"
+          ? value === "both"
+            ? "both"
+            : (Number(value) as 1 | 2)
+          : value,
+    }));
   };
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    if (!selectedCell) return;
 
     const lesson: Lesson = {
       ...newLesson,
       id: Math.random().toString(36).substr(2, 9),
     };
 
-    onAddLesson(
-      lesson,
-      selectedCell.day,
-      selectedCell.time,
-      selectedCell.group
-    );
+    setSchedule((prev) => ({
+      ...prev,
+      lessons: [...prev.lessons, lesson],
+    }));
+
     closeModal();
-  };
-
-  const onAddLesson = (
-    lesson: Lesson,
-    day: string,
-    time: string,
-    group: string
-  ) => {
-    console.log(lesson);
-    setSchedule((prevSchedule) => {
-      // Создаем глубокую копию расписания
-      const newSchedule = JSON.parse(
-        JSON.stringify(prevSchedule)
-      ) as ScheduleData;
-
-      // Находим нужный день
-      const dayIndex = newSchedule.days.findIndex((d) => d.day === day);
-      if (dayIndex === -1) return prevSchedule;
-
-      // Находим нужный временной слот
-      const timeSlotIndex = newSchedule.days[dayIndex].timeSlots.findIndex(
-        (t) => t.time === time
-      );
-      if (timeSlotIndex === -1) return prevSchedule;
-
-      // Добавляем урок в соответствующую группу
-      const timeSlot = newSchedule.days[dayIndex].timeSlots[timeSlotIndex];
-      if (!timeSlot.lessons[group]) {
-        timeSlot.lessons[group] = [];
-      }
-      timeSlot.lessons[group].push(lesson);
-      console.log(newSchedule);
-
-      return newSchedule;
-    });
   };
 
   return (
     <div className="App">
       <h1>Расписание занятий</h1>
-      <button onClick={openModal}>Add+</button>
+      <button onClick={() => setIsModalOpen(true)}>Добавить урок</button>
       <ScheduleTable
-        data={schedule}
-        onSelect={(cell: { day: string; time: string; group: string }) =>
-          setSelectedCell(cell)
-        }
-        selectedCell={selectedCell}
+        days={DAYS_OF_WEEK}
+        timeSlots={TIME_SLOTS}
+        groups={schedule.groups}
+        lessons={schedule.lessons}
+        onSelect={openModal}
       />
       {isModalOpen && (
-        <Modal
-          closeModal={closeModal}
-          handleInputChange={handleInputChange}
-          newLesson={newLesson}
-          handleSubmit={handleSubmit}
-          selectedCell={selectedCell}
-        />
+        <Modal onClose={() => setIsModalOpen(false)}>
+          <AddLessonForm
+            handleInputChange={handleInputChange}
+            handleSubmit={handleSubmit}
+            newLesson={newLesson}
+            selectedCell={selectedCell}
+          />
+        </Modal>
       )}
     </div>
   );

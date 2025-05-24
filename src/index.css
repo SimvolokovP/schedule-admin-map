@@ -1,12 +1,30 @@
 /* ScheduleTable.css */
 .schedule-wrapper {
-  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
-  max-width: 100%;
-  overflow-x: auto;
-  margin: 20px;
-  box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
-  border-radius: 8px;
-  background: white;
+  position: relative;
+  height: 100vh; /* или любая другая высота */
+  overflow: auto;
+}
+
+.schedule-container {
+  position: relative;
+}
+
+.schedule-table {
+  border-collapse: collapse;
+  width: 100%;
+}
+
+.schedule-table thead {
+  position: sticky;
+  top: 0;
+  background: white; /* или любой другой цвет фона */
+  z-index: 10;
+}
+
+.schedule-table th {
+  border-bottom: 1px solid #ddd;
+  padding: 8px;
+  text-align: center;
 }
 
 .schedule-header {
