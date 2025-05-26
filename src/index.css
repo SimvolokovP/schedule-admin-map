@@ -7,6 +7,7 @@
   box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
   border-radius: 8px;
   background: white;
+  height: 100%;
 }
 
 .schedule-header {
@@ -446,4 +447,155 @@
   border-radius: 8px;
   background: white;
   /* position: fixed; */
+}
+
+/* Основные стили приложения */
+.app-container {
+  display: flex;
+  min-height: 100vh;
+}
+
+/* Стили для контента с отступом под Sidebar */
+.content-with-sidebar {
+  flex: 1;
+  margin-left: 250px; /* Ширина Sidebar */
+  padding: 0 20px;
+  transition: margin 0.3s ease;
+}
+
+/* Если Sidebar закрыт */
+.sidebar-closed + .content-with-sidebar {
+  margin-left: 80px; /* Уменьшенная ширина закрытого Sidebar */
+}
+
+/* Адаптивность для мобильных устройств */
+@media (max-width: 768px) {
+  .content-with-sidebar {
+    margin-left: 0;
+    padding-top: 60px; /* Добавляем отступ сверху для мобильного меню */
+  }
+
+  .sidebar-closed + .content-with-sidebar,
+  .sidebar-open + .content-with-sidebar {
+    margin-left: 0;
+  }
+}
+
+/* Стили для Sidebar */
+.sidebar {
+  background: #2c3e50;
+  color: white;
+  transition: all 0.3s;
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  position: fixed;
+  z-index: 100;
+}
+
+.sidebar.open {
+  width: 250px;
+}
+
+.sidebar.closed {
+  width: 60px;
+}
+
+.sidebar-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 15px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.sidebar-toggle {
+  background: none;
+  border: none;
+  color: white;
+  font-size: 1.5rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.sidebar-nav {
+  flex: 1;
+  padding: 15px 0;
+  overflow-y: auto;
+}
+
+.nav-item {
+  display: flex;
+  align-items: center;
+  padding: 12px 15px;
+  color: white;
+  text-decoration: none;
+  transition: background 0.3s;
+}
+
+.nav-item:hover {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.nav-icon {
+  font-size: 1.2rem;
+  margin-right: 15px;
+  flex-shrink: 0;
+}
+
+.sidebar-footer {
+  padding: 15px;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+/* Основное содержимое */
+.main-content {
+  margin-left: 60px;
+  flex: 1;
+  transition: margin 0.3s;
+  padding: 20px;
+}
+
+.main-content.sidebar-open {
+  margin-left: 250px;
+}
+
+.main-content.sidebar-closed {
+  margin-left: 60px;
+}
+
+/* Адаптивность */
+@media (max-width: 768px) {
+  .sidebar.open {
+    width: 200px;
+  }
+
+  .main-content.sidebar-open {
+    margin-left: 200px;
+  }
+}
+
+@media (max-width: 576px) {
+  .sidebar {
+    transform: translateX(-100%);
+  }
+
+  .sidebar.open {
+    transform: translateX(0);
+    width: 80%;
+  }
+
+  .main-content {
+    margin-left: 0;
+  }
+
+  .main-content.sidebar-open {
+    margin-left: 0;
+    position: fixed;
+    width: 100%;
+    filter: brightness(0.7);
+    pointer-events: none;
+  }
 }

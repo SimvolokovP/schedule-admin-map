@@ -90,7 +90,7 @@ const SchedulePage = () => {
   };
 
   return (
-    <div>
+    <div style={{ height: "100vh" }}>
       <ActionsChapter
         handleInputChange={handleInputChange}
         handleSubmit={handleSubmit}
