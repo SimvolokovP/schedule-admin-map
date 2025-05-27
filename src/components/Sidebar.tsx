@@ -25,7 +25,7 @@ const Sidebar = () => {
           <FiCalendar className="nav-icon" />
           {isOpen && <span>Расписание</span>}
         </Link>
-        <Link to="/user" className="nav-item">
+        <Link to="/user" className="nav-item" target="_blank">
           <FiUsers className="nav-icon" />
           {isOpen && <span>Пользователь</span>}
         </Link>

@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { useSchedule, type LessonsFilterParams } from "../store/useSchedule";
 import type { Lesson, SubgroupType, WeekType } from "../types";
+import { getLessonAbbreviation } from "../components/helpers/getLessonAbbreviation";
 
 const UserPage = () => {
   const [lessons, setLessons] = useState<Lesson[]>([]);
@@ -44,17 +45,21 @@ const UserPage = () => {
             setFilterParams({ ...filterParams, group: v.target.value })
           }
         >
-          <option value="">Группа</option>
+          <option selected={false} value="">
+            Группа
+          </option>
           <option value="У-222">У-222</option>
           <option value="У-223">У-223</option>
           <option value="У-224">У-224</option>
         </select>
 
-        {/* Выбор подгруппы */}
         <select
           value={filterParams.subgroup}
           onChange={(v) => handleSubgroupChange(v.target.value)}
         >
+          <option selected={false} value="">
+            Подгруппа
+          </option>
           <option value="1">1</option>
           <option value="2">2</option>
         </select>
@@ -85,12 +90,25 @@ const UserPage = () => {
         </select>
       </div>
 
-      {/* Вывод уроков */}
-      {lessons.map((lesson) => (
-        <div key={lesson.id}>
-          {lesson.name} - {lesson.time}
-        </div>
-      ))}
+      {lessons && lessons.length ? (
+        <ul className="users-lessons-list">
+          {lessons.map((lesson) => (
+            <li key={lesson.id}>
+              <article className={`users-lessons-item ${lesson.type}`}>
+                <div className="users-lessons-item-time">{lesson.time}</div>
+                <div>
+                  {getLessonAbbreviation(lesson.type)}. {lesson.name}
+                </div>
+                <div>
+                  {lesson.teacher} - {lesson.room}
+                </div>
+              </article>
+            </li>
+          ))}
+        </ul>
+      ) : (
+        <div className="users-lessons-empty">В этот день пар нет :)</div>
+      )}
     </div>
   );
 };

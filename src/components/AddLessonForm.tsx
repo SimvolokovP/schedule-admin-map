@@ -1,23 +1,6 @@
 import type { FC, FormEvent } from "react";
 import type { Lesson } from "../types";
-
-const DAYS_OF_WEEK = [
-  "ПОНЕДЕЛЬНИК",
-  "ВТОРНИК",
-  "СРЕДА",
-  "ЧЕТВЕРГ",
-  "ПЯТНИЦА",
-  "СУББОТА",
-];
-
-const TIME_SLOTS = [
-  "08.00-09.35",
-  "09.45-11.20",
-  "11.50-13.25",
-  "13.35-15.10",
-  "15.20-16.55",
-  "17.05-18.40",
-];
+import { DAYS_OF_WEEK, TIME_SLOTS } from "../tableHelpers";
 
 interface AddLessonFormProps {
   selectedCell?: {
@@ -97,7 +80,6 @@ const AddLessonForm: FC<AddLessonFormProps> = ({
           </>
         )}
 
-        {/* Если ячейка выбрана, показываем день и время как текст */}
         {selectedCell && (
           <p>
             День: {selectedCell.day}
@@ -106,7 +88,6 @@ const AddLessonForm: FC<AddLessonFormProps> = ({
           </p>
         )}
 
-        {/* Остальные поля формы */}
         <div className="form-group">
           <label>Название предмета:</label>
           <input

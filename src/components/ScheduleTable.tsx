@@ -1,5 +1,6 @@
 import { Fragment } from "react";
 import type { Lesson, LessonType } from "../types";
+import { getLessonAbbreviation } from "./helpers/getLessonAbbreviation";
 
 interface ScheduleTableProps {
   days: string[];
@@ -16,14 +17,7 @@ const ScheduleTable: React.FC<ScheduleTableProps> = ({
   lessons,
   onSelect,
 }) => {
-  const getLessonAbbreviation = (type: LessonType): string => {
-    const abbreviations = {
-      lecture: "лк",
-      practice: "пр",
-      lab: "лб",
-    };
-    return abbreviations[type] || "";
-  };
+  
 
   const getLessonsForCell = (day: string, time: string, group: string) => {
     return lessons.filter(

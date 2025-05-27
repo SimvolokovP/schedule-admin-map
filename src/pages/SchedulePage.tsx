@@ -5,23 +5,8 @@ import Modal from "../components/Modal";
 import ScheduleTable from "../components/ScheduleTable";
 import type { Lesson } from "../types";
 import { useSchedule } from "../store/useSchedule";
+import { DAYS_OF_WEEK, TIME_SLOTS } from "../tableHelpers";
 
-const DAYS_OF_WEEK = [
-  "ПОНЕДЕЛЬНИК",
-  "ВТОРНИК",
-  "СРЕДА",
-  "ЧЕТВЕРГ",
-  "ПЯТНИЦА",
-  "СУББОТА",
-];
-const TIME_SLOTS = [
-  "08.00-09.35",
-  "09.45-11.20",
-  "11.50-13.25",
-  "13.35-15.10",
-  "15.20-16.55",
-  "17.05-18.40",
-];
 
 const SchedulePage = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
