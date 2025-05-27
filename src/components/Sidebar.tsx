@@ -25,9 +25,9 @@ const Sidebar = () => {
           <FiCalendar className="nav-icon" />
           {isOpen && <span>Расписание</span>}
         </Link>
-        <Link to="/groups" className="nav-item">
+        <Link to="/user" className="nav-item">
           <FiUsers className="nav-icon" />
-          {isOpen && <span>Группы</span>}
+          {isOpen && <span>Пользователь</span>}
         </Link>
         <Link to="/settings" className="nav-item">
           <FiSettings className="nav-icon" />

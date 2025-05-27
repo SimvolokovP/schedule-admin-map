@@ -2,6 +2,7 @@ import { type FC } from "react";
 import { Route, Routes } from "react-router-dom";
 import SchedulePage from "./pages/SchedulePage";
 import Sidebar from "./components/Sidebar";
+import UserPage from "./pages/UserPage";
 
 const App: FC = () => {
   return (
@@ -10,7 +11,7 @@ const App: FC = () => {
       <div className="content-with-sidebar">
         <Routes>
           <Route path="/schedule" element={<SchedulePage />} />
-          {/* Добавьте другие маршруты по мере необходимости */}
+          <Route path="/user" element={<UserPage />} />
         </Routes>
       </div>
     </div>
