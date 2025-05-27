@@ -1,4 +1,4 @@
-import type { LessonType } from "../../types";
+import type { LessonType } from "../types";
 
 export const getLessonAbbreviation = (type: LessonType): string => {
   const abbreviations = {

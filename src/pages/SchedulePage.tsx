@@ -7,7 +7,6 @@ import type { Lesson } from "../types";
 import { useSchedule } from "../store/useSchedule";
 import { DAYS_OF_WEEK, TIME_SLOTS } from "../tableHelpers";
 
-
 const SchedulePage = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [newLesson, setNewLesson] = useState<Omit<Lesson, "id">>({
@@ -27,7 +26,7 @@ const SchedulePage = () => {
     group: string;
   } | null>(null);
 
-  const { data, addLesson } = useSchedule();
+  const { data, addLesson, deleteLesson, updateLesson } = useSchedule();
 
   const openModal = (cell: { day: string; time: string; group: string }) => {
     setSelectedCell(cell);
@@ -61,6 +60,16 @@ const SchedulePage = () => {
     }));
   };
 
+  const handleEditLesson = (updatedLesson: Lesson) => {
+    console.log("edit", updatedLesson);
+    updateLesson(updatedLesson);
+  };
+
+  const handleDeleteLesson = (lessonId: string) => {
+    console.log("delete" + lessonId);
+    deleteLesson(lessonId);
+  };
+
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
 
@@ -81,8 +90,12 @@ const SchedulePage = () => {
         handleSubmit={handleSubmit}
         newLesson={newLesson}
       />
-      <div>{data.faculty}</div>
+      <div style={{ textAlign: "center", padding: "4px", fontSize: "18px" }}>
+        {data.faculty} / {data.year}
+      </div>
       <ScheduleTable
+        onDelete={handleDeleteLesson}
+        onEdit={handleEditLesson}
         days={DAYS_OF_WEEK}
         timeSlots={TIME_SLOTS}
         groups={data.groups}

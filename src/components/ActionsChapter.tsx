@@ -20,7 +20,11 @@ const ActionsChapter: FC<ActionsChapterProps> = ({
 
   return (
     <div className="actions-chapter">
-      <button onClick={() => setIsModalOpen(true)}>Добавить урок</button>
+      <div style={{display: "flex", gap: "8px"}}>
+        <button onClick={() => setIsModalOpen(true)}>Добавить урок</button>
+        <button disabled>Добавть Расписание Excel</button>
+        <button disabled>Сохранить в бд</button>
+      </div>
       {isModalOpen && (
         <Modal onClose={() => setIsModalOpen(false)}>
           <AddLessonForm

@@ -167,7 +167,7 @@ const AddLessonForm: FC<AddLessonFormProps> = ({
         </div>
 
         <div className="modal-actions">
-          <button type="submit">Добавить урок</button>
+          <button type="submit">ОК</button>
         </div>
       </form>
     </>

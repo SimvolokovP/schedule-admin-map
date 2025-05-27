@@ -1,6 +1,6 @@
 import { Fragment } from "react";
-import type { Lesson, LessonType } from "../types";
-import { getLessonAbbreviation } from "./helpers/getLessonAbbreviation";
+import type { Lesson } from "../types";
+import LessonCell from "./LessonCell";
 
 interface ScheduleTableProps {
   days: string[];
@@ -8,6 +8,8 @@ interface ScheduleTableProps {
   groups: string[];
   lessons: Lesson[];
   onSelect: (cell: { day: string; time: string; group: string }) => void;
+  onEdit: (updatedLesson: Lesson) => void;
+  onDelete: (lessonId: string) => void;
 }
 
 const ScheduleTable: React.FC<ScheduleTableProps> = ({
@@ -16,34 +18,13 @@ const ScheduleTable: React.FC<ScheduleTableProps> = ({
   groups,
   lessons,
   onSelect,
+  onEdit,
+  onDelete,
 }) => {
-  
-
   const getLessonsForCell = (day: string, time: string, group: string) => {
     return lessons.filter(
       (lesson) =>
         lesson.day === day && lesson.time === time && lesson.group === group
-    );
-  };
-
-  const renderLesson = (lesson: Lesson) => {
-    const typeAbbr = getLessonAbbreviation(lesson.type);
-    const isUniversal = lesson.subgroup === "both" && lesson.week === "both";
-
-    return (
-      <div
-        key={lesson.id}
-        className={`lesson ${lesson.type} ${isUniversal ? "universal" : ""}`}
-      >
-        <span className="lesson-type">{typeAbbr}</span>
-        <div className="lesson-content">
-          <div className="lesson-name">{lesson.name}</div>
-          <div className="lesson-details">
-            <span className="teacher">{lesson.teacher}</span>
-            <span className="room">{lesson.room}</span>
-          </div>
-        </div>
-      </div>
     );
   };
 
@@ -68,7 +49,11 @@ const ScheduleTable: React.FC<ScheduleTableProps> = ({
       return (
         <td key={`${day}-${time}-${group}`} className="group-cell">
           <div className="cell-grid universal-lesson">
-            {renderLesson(universalLesson)}
+            <LessonCell
+              lesson={universalLesson}
+              onEdit={onEdit}
+              onDelete={onDelete}
+            />
           </div>
         </td>
       );
@@ -99,29 +84,87 @@ const ScheduleTable: React.FC<ScheduleTableProps> = ({
     return (
       <td key={`${day}-${time}-${group}`} className="group-cell">
         <div className="cell-grid">
+          {/* Верхний ряд (числитель) */}
           <div className="cell-part numerator">
             <div className="subgroup-part subgroup-1">
-              {lessonsMap["numerator-1"].map(renderLesson)}
-              {lessonsMap["both-1"].map(renderLesson)}
+              {lessonsMap["numerator-1"].map((lesson) => (
+                <LessonCell
+                  key={lesson.id}
+                  lesson={lesson}
+                  onEdit={onEdit}
+                  onDelete={onDelete}
+                />
+              ))}
+              {lessonsMap["both-1"].map((lesson) => (
+                <LessonCell
+                  key={lesson.id}
+                  lesson={lesson}
+                  onEdit={onEdit}
+                  onDelete={onDelete}
+                />
+              ))}
             </div>
             <div className="subgroup-divider vertical"></div>
             <div className="subgroup-part subgroup-2">
-              {lessonsMap["numerator-2"].map(renderLesson)}
-              {lessonsMap["both-2"].map(renderLesson)}
+              {lessonsMap["numerator-2"].map((lesson) => (
+                <LessonCell
+                  key={lesson.id}
+                  lesson={lesson}
+                  onEdit={onEdit}
+                  onDelete={onDelete}
+                />
+              ))}
+              {lessonsMap["both-2"].map((lesson) => (
+                <LessonCell
+                  key={lesson.id}
+                  lesson={lesson}
+                  onEdit={onEdit}
+                  onDelete={onDelete}
+                />
+              ))}
             </div>
           </div>
 
           <div className="week-divider horizontal"></div>
 
+          {/* Нижний ряд (знаменатель) */}
           <div className="cell-part denominator">
             <div className="subgroup-part subgroup-1">
-              {lessonsMap["denominator-1"].map(renderLesson)}
-              {lessonsMap["both-1"].map(renderLesson)}
+              {lessonsMap["denominator-1"].map((lesson) => (
+                <LessonCell
+                  key={lesson.id}
+                  lesson={lesson}
+                  onEdit={onEdit}
+                  onDelete={onDelete}
+                />
+              ))}
+              {lessonsMap["both-1"].map((lesson) => (
+                <LessonCell
+                  key={lesson.id}
+                  lesson={lesson}
+                  onEdit={onEdit}
+                  onDelete={onDelete}
+                />
+              ))}
             </div>
             <div className="subgroup-divider vertical"></div>
             <div className="subgroup-part subgroup-2">
-              {lessonsMap["denominator-2"].map(renderLesson)}
-              {lessonsMap["both-2"].map(renderLesson)}
+              {lessonsMap["denominator-2"].map((lesson) => (
+                <LessonCell
+                  key={lesson.id}
+                  lesson={lesson}
+                  onEdit={onEdit}
+                  onDelete={onDelete}
+                />
+              ))}
+              {lessonsMap["both-2"].map((lesson) => (
+                <LessonCell
+                  key={lesson.id}
+                  lesson={lesson}
+                  onEdit={onEdit}
+                  onDelete={onDelete}
+                />
+              ))}
             </div>
           </div>
         </div>

@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useSchedule, type LessonsFilterParams } from "../store/useSchedule";
 import type { Lesson, SubgroupType, WeekType } from "../types";
-import { getLessonAbbreviation } from "../components/helpers/getLessonAbbreviation";
+import { getLessonAbbreviation } from "../helpers/getLessonAbbreviation";
 
 const UserPage = () => {
   const [lessons, setLessons] = useState<Lesson[]>([]);

@@ -11,6 +11,8 @@ export interface LessonsFilterParams {
 interface ScheduleState {
   data: ScheduleData;
   addLesson: (lesson: Lesson) => void;
+  deleteLesson: (id: string) => void;
+  updateLesson: (updatedLesson: Lesson) => void;
   getFilteredLessons: (params: LessonsFilterParams) => Lesson[];
 }
 
@@ -41,6 +43,31 @@ export const useSchedule = create<ScheduleState>((set, get) => ({
   addLesson: (lesson: Lesson) => {
     const currentData = get().data;
     const updatedLessons = [...currentData.lessons, lesson];
+    const updatedData = { ...currentData, lessons: updatedLessons };
+
+    if (typeof window !== "undefined") {
+      localStorage.setItem("scheduleData", JSON.stringify(updatedData));
+    }
+
+    set({ data: updatedData });
+  },
+
+  updateLesson: (updatedLesson: Lesson) => {
+    const currentData = get().data;
+    const updatedLessons = currentData.lessons.map((lesson) =>
+      lesson.id === updatedLesson.id ? updatedLesson : lesson
+    );
+    const updatedData = { ...currentData, lessons: updatedLessons };
+    if (typeof window !== "undefined") {
+      localStorage.setItem("scheduleData", JSON.stringify(updatedData));
+    }
+    set({ data: updatedData });
+  },
+  deleteLesson: (id: string) => {
+    const currentData = get().data;
+    const updatedLessons = currentData.lessons.filter(
+      (lesson) => lesson.id !== id
+    );
     const updatedData = { ...currentData, lessons: updatedLessons };
 
     if (typeof window !== "undefined") {
