@@ -1,13 +1,20 @@
 import { Fragment } from "react";
 import type { Lesson } from "../types";
 import LessonCell from "./LessonCell";
+import ScheduleLegend from "./ScheduleLegend";
 
 interface ScheduleTableProps {
   days: string[];
   timeSlots: string[];
   groups: string[];
   lessons: Lesson[];
-  onSelect: (cell: { day: string; time: string; group: string }) => void;
+  onSelect: (cell: {
+    day: string;
+    time: string;
+    group: string;
+    subgroup?: 1 | 2 | "both";
+    week?: "numerator" | "denominator" | "both";
+  }) => void;
   onEdit: (updatedLesson: Lesson) => void;
   onDelete: (lessonId: string) => void;
 }
@@ -26,6 +33,16 @@ const ScheduleTable: React.FC<ScheduleTableProps> = ({
       (lesson) =>
         lesson.day === day && lesson.time === time && lesson.group === group
     );
+  };
+
+  const handleSubCellClick = (
+    day: string,
+    time: string,
+    group: string,
+    subgroup: 1 | 2 | "both",
+    week: "numerator" | "denominator" | "both"
+  ) => {
+    onSelect({ day, time, group, subgroup, week });
   };
 
   const renderCell = (day: string, time: string, group: string) => {
@@ -84,9 +101,13 @@ const ScheduleTable: React.FC<ScheduleTableProps> = ({
     return (
       <td key={`${day}-${time}-${group}`} className="group-cell">
         <div className="cell-grid">
-          {/* Верхний ряд (числитель) */}
           <div className="cell-part numerator">
-            <div className="subgroup-part subgroup-1">
+            <div
+              className="subgroup-part subgroup-1 clickable-subcell"
+              // onClick={() =>
+              //   handleSubCellClick(day, time, group, 1, "numerator")
+              // }
+            >
               {lessonsMap["numerator-1"].map((lesson) => (
                 <LessonCell
                   key={lesson.id}
@@ -103,9 +124,18 @@ const ScheduleTable: React.FC<ScheduleTableProps> = ({
                   onDelete={onDelete}
                 />
               ))}
+              {lessonsMap["numerator-1"].length === 0 &&
+                lessonsMap["both-1"].length === 0 && (
+                  <div className="empty-subcell"></div>
+                )}
             </div>
             <div className="subgroup-divider vertical"></div>
-            <div className="subgroup-part subgroup-2">
+            <div
+              className="subgroup-part subgroup-2 clickable-subcell"
+              // onClick={() =>
+              //   handleSubCellClick(day, time, group, 2, "numerator")
+              // }
+            >
               {lessonsMap["numerator-2"].map((lesson) => (
                 <LessonCell
                   key={lesson.id}
@@ -122,6 +152,10 @@ const ScheduleTable: React.FC<ScheduleTableProps> = ({
                   onDelete={onDelete}
                 />
               ))}
+              {lessonsMap["numerator-2"].length === 0 &&
+                lessonsMap["both-2"].length === 0 && (
+                  <div className="empty-subcell"></div>
+                )}
             </div>
           </div>
 
@@ -129,7 +163,12 @@ const ScheduleTable: React.FC<ScheduleTableProps> = ({
 
           {/* Нижний ряд (знаменатель) */}
           <div className="cell-part denominator">
-            <div className="subgroup-part subgroup-1">
+            <div
+              className="subgroup-part subgroup-1 clickable-subcell"
+              // onClick={() =>
+              //   handleSubCellClick(day, time, group, 1, "denominator")
+              // }
+            >
               {lessonsMap["denominator-1"].map((lesson) => (
                 <LessonCell
                   key={lesson.id}
@@ -146,9 +185,18 @@ const ScheduleTable: React.FC<ScheduleTableProps> = ({
                   onDelete={onDelete}
                 />
               ))}
+              {lessonsMap["denominator-1"].length === 0 &&
+                lessonsMap["both-1"].length === 0 && (
+                  <div className="empty-subcell"></div>
+                )}
             </div>
             <div className="subgroup-divider vertical"></div>
-            <div className="subgroup-part subgroup-2">
+            <div
+              className="subgroup-part subgroup-2 clickable-subcell"
+              // onClick={() =>
+              //   handleSubCellClick(day, time, group, 2, "denominator")
+              // }
+            >
               {lessonsMap["denominator-2"].map((lesson) => (
                 <LessonCell
                   key={lesson.id}
@@ -165,6 +213,10 @@ const ScheduleTable: React.FC<ScheduleTableProps> = ({
                   onDelete={onDelete}
                 />
               ))}
+              {lessonsMap["denominator-2"].length === 0 &&
+                lessonsMap["both-2"].length === 0 && (
+                  <div className="empty-subcell"></div>
+                )}
             </div>
           </div>
         </div>
@@ -205,6 +257,7 @@ const ScheduleTable: React.FC<ScheduleTableProps> = ({
             ))}
           </tbody>
         </table>
+        <ScheduleLegend />
       </div>
     </div>
   );

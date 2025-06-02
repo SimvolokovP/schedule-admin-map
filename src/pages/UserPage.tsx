@@ -20,7 +20,6 @@ const UserPage = () => {
     setLessons(targetLessons);
   }, [filterParams]);
 
-  // Обработчик для подгруппы
   const handleSubgroupChange = (value: string) => {
     let subgroupValue: SubgroupType;
     if (value === "1" || value === "2") {
@@ -31,13 +30,12 @@ const UserPage = () => {
     setFilterParams({ ...filterParams, subgroup: subgroupValue });
   };
 
-  // Обработчик для недели
   const handleWeekChange = (value: string) => {
     setFilterParams({ ...filterParams, week: value as WeekType });
   };
 
   return (
-    <div>
+    <div style={{paddingTop: "16px"}}>
       <div style={{ display: "flex", gap: "12px" }}>
         {/* Выбор группы */}
         <select

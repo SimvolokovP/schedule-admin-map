@@ -28,6 +28,16 @@ const SchedulePage = () => {
 
   const { data, addLesson, deleteLesson, updateLesson } = useSchedule();
 
+  // const [targetData, setTargetData] = useState<ScheduleData>(
+  //   {} as ScheduleData
+  // );
+
+  // useEffect(() => {
+  //   if (data) {
+  //     setTargetData(data);
+  //   }
+  // }, [data]);
+
   const openModal = (cell: { day: string; time: string; group: string }) => {
     setSelectedCell(cell);
     setNewLesson((prev) => ({

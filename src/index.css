@@ -657,3 +657,29 @@
 .delete-button:hover {
   background-color: #cc0000 !important;
 }
+
+/* Стили для кликабельных подклеток */
+.clickable-subcell {
+  position: relative;
+  cursor: pointer;
+}
+
+.empty-subcell {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(255, 255, 255, 0.5);
+  z-index: 1;
+}
+
+.clickable-subcell:hover .empty-subcell {
+  background-color: rgba(245, 245, 245, 0.7);
+}
+
+/* Убедимся, что уроки отображаются поверх подклеток */
+.lesson {
+  position: relative;
+  z-index: 2;
+}

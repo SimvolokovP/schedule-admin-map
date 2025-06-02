@@ -1,5 +1,5 @@
 import type { FC, FormEvent } from "react";
-import type { Lesson } from "../types";
+import type { Lesson, SubgroupType, WeekType } from "../types";
 import { DAYS_OF_WEEK, TIME_SLOTS } from "../tableHelpers";
 
 interface AddLessonFormProps {
@@ -7,6 +7,8 @@ interface AddLessonFormProps {
     day: string;
     time: string;
     group: string;
+    week?: WeekType;
+    subgroup?: SubgroupType;
   } | null;
   handleSubmit: (e: FormEvent) => void;
   newLesson: Omit<Lesson, "id">;
@@ -141,7 +143,7 @@ const AddLessonForm: FC<AddLessonFormProps> = ({
             <label>Неделя:</label>
             <select
               name="week"
-              value={newLesson.week}
+              value={selectedCell?.week || newLesson.week}
               onChange={handleInputChange}
               required
             >
@@ -155,7 +157,7 @@ const AddLessonForm: FC<AddLessonFormProps> = ({
             <label>Подгруппа:</label>
             <select
               name="subgroup"
-              value={newLesson.subgroup}
+              value={selectedCell?.subgroup || newLesson.subgroup}
               onChange={handleInputChange}
               required
             >

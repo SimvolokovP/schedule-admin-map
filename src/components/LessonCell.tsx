@@ -44,6 +44,12 @@ const LessonCell: React.FC<LessonCellProps> = ({
     setIsModalOpen(false);
   };
 
+  const handleDeleteLesson = () => {
+    if (confirm(`Удалить ${lesson.name}?`)) {
+      handleDelete();
+    }
+  };
+
   const typeAbbr = getLessonAbbreviation(lesson.type);
   const isUniversal = lesson.subgroup === "both" && lesson.week === "both";
 
@@ -74,7 +80,9 @@ const LessonCell: React.FC<LessonCellProps> = ({
             <button
               type="button"
               className="delete-button"
-              onClick={handleDelete}
+              onClick={() => {
+                handleDeleteLesson();
+              }}
             >
               Удалить
             </button>
