@@ -3,11 +3,13 @@
   font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
   max-width: 100%;
   overflow-x: auto;
-  margin: 20px;
+  /* margin: 20px; */
   box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
   border-radius: 8px;
   background: white;
   height: 100%;
+  margin-top: 52px;
+  width: 100%;
 }
 
 .schedule-header {
@@ -445,13 +447,17 @@
 
 .actions-chapter {
   font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
-  max-width: 100%;
+
   overflow-x: auto;
   padding: 8px;
   box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
   border-radius: 8px;
   background: white;
   /* position: fixed; */
+  position: fixed;
+  /* width: 100%; */
+  z-index: 100;
+  top: 0;
 }
 
 /* Основные стили приложения */

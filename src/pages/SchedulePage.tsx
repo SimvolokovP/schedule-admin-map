@@ -99,10 +99,8 @@ const SchedulePage = () => {
         handleInputChange={handleInputChange}
         handleSubmit={handleSubmit}
         newLesson={newLesson}
+        data={data}
       />
-      <div style={{ textAlign: "center", padding: "4px", fontSize: "18px" }}>
-        {data.faculty} / {data.year}
-      </div>
       <ScheduleTable
         onDelete={handleDeleteLesson}
         onEdit={handleEditLesson}

@@ -35,15 +35,15 @@ const ScheduleTable: React.FC<ScheduleTableProps> = ({
     );
   };
 
-  const handleSubCellClick = (
-    day: string,
-    time: string,
-    group: string,
-    subgroup: 1 | 2 | "both",
-    week: "numerator" | "denominator" | "both"
-  ) => {
-    onSelect({ day, time, group, subgroup, week });
-  };
+  // const handleSubCellClick = (
+  //   day: string,
+  //   time: string,
+  //   group: string,
+  //   subgroup: 1 | 2 | "both",
+  //   week: "numerator" | "denominator" | "both"
+  // ) => {
+  //   onSelect({ day, time, group, subgroup, week });
+  // };
 
   const renderCell = (day: string, time: string, group: string) => {
     const cellLessons = getLessonsForCell(day, time, group);

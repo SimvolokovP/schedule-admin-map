@@ -1,7 +1,7 @@
 import { useState, type FC, type FormEvent } from "react";
 import Modal from "./Modal";
 import AddLessonForm from "./AddLessonForm";
-import type { Lesson } from "../types";
+import type { Lesson, ScheduleData } from "../types";
 
 interface ActionsChapterProps {
   handleSubmit: (e: FormEvent) => void;
@@ -9,6 +9,7 @@ interface ActionsChapterProps {
   handleInputChange: (
     e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
   ) => void;
+  data: ScheduleData;
   // savedData: ScheduleData;
   // targetData: ScheduleData;
 }
@@ -17,6 +18,7 @@ const ActionsChapter: FC<ActionsChapterProps> = ({
   handleInputChange,
   handleSubmit,
   newLesson,
+  data,
 }) => {
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
   // const [isSavedBtnActive, setIsSaveBtnActive] = useState<boolean>(false);
